@@ -52,7 +52,7 @@ margin-left:15px;
 text-decoration:none;
 }
 
-/* HERO PARALLAX */
+/* HERO */
 .hero{
 height:100vh;
 display:flex;
@@ -97,11 +97,12 @@ transform:scale(1.1);
 box-shadow:0 0 20px var(--accent);
 }
 
-/* CARDS */
+/* SECTIONS */
 section{
 padding:80px 6%;
 }
 
+/* CARDS */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -128,12 +129,22 @@ border-radius:15px;
 margin-top:10px;
 }
 
-/* ADMIN PANEL */
+/* ADMIN */
 .admin{
 background:var(--card);
 padding:20px;
 border-radius:15px;
 margin-top:20px;
+}
+
+/* RULES */
+.rules-box{
+background:var(--card);
+padding:25px;
+border-radius:15px;
+line-height:1.6;
+color:var(--text);
+white-space:pre-line;
 }
 
 /* TOGGLE */
@@ -162,6 +173,7 @@ to{opacity:1; transform:translateY(0);}
 <div class="logo">NOVA RADIANCE RP</div>
 <nav>
 <a href="#news">News</a>
+<a href="#rules">Regeln</a>
 <a href="#discord">Discord</a>
 </nav>
 </header>
@@ -180,7 +192,6 @@ to{opacity:1; transform:translateY(0);}
 <h2>📢 News</h2>
 <div id="newsContainer"></div>
 
-<!-- ADMIN PANEL -->
 <div class="admin">
 <h3>Admin Panel</h3>
 <input id="title" placeholder="Titel">
@@ -191,11 +202,58 @@ to{opacity:1; transform:translateY(0);}
 </div>
 </section>
 
+<!-- RULES (NEU) -->
+<section id="rules">
+<h2>📜 Regelwerk</h2>
+
+<div class="rules-box">
+
+DISCORD REGELN
+§1 Respektvolle Community ohne Mobbing oder Belästigung
+§2 Kein Ausgrenzen oder Angreifen anderer
+§3 Respekt gegenüber allen Personen
+§4 Keine Diskriminierung oder Beleidigungen
+§5 Keine sexuellen Inhalte oder Anspielungen
+§6 NSFW Inhalte sind verboten
+§7 Kein störendes Verhalten (Soundboards etc.)
+§8 Keine falschen Anschuldigungen
+§9 Keine Drohungen oder Fake-Behauptungen
+§10 Keine Aufnahmen ohne Zustimmung
+§11 Politische/extreme Inhalte im Namen verboten
+§12 Respektvolle Community ist Pflicht
+§13 Verifizierung erforderlich
+
+RP REGELN
+- Realistisches Roleplay verpflichtend
+- Kein FailRP / Meta / Powergaming / RDM / VDM
+- Keine unrealistischen Aktionen
+- Verletzungen müssen ausgespielt werden
+
+POLIZEI / SEK / FEUERWEHR / RD
+- Realistische Einsätze
+- Kein Missbrauch von Rollen
+- Teamarbeit Pflicht
+
+FAHRZEUGE
+- Realistisch fahren
+- Kein Rammen oder Trolling
+
+TEAM
+- Admins sind neutral
+- Entscheidungen sind endgültig
+
+STRAFEN
+Verwarnung → Kick → Ban
+
+Regeln können jederzeit geändert werden.
+
+</div>
+</section>
+
 <!-- DISCORD -->
 <section id="discord">
 <h2>Discord Live</h2>
 
-<!-- Member Counter -->
 <div class="card">
 Live Mitglieder: <span id="members">Lade...</span>
 </div>
@@ -209,7 +267,6 @@ Live Mitglieder: <span id="members">Lade...</span>
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* 🔥 DEINE FIREBASE CONFIG HIER EINTRAGEN */
 const firebaseConfig = {
 apiKey: "XXX",
 authDomain: "XXX",
@@ -219,7 +276,7 @@ projectId: "XXX"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* NEWS LADEN */
+/* NEWS */
 async function loadNews(){
 const snap = await getDocs(collection(db,"news"));
 document.getElementById("newsContainer").innerHTML="";
@@ -233,7 +290,6 @@ document.getElementById("newsContainer").innerHTML += `
 });
 }
 
-/* NEWS HINZUFÜGEN */
 window.addNews = async function(){
 let t = document.getElementById("title").value;
 let tx = document.getElementById("text").value;
@@ -246,12 +302,11 @@ text:tx
 loadNews();
 }
 
-/* DARK MODE */
+/* THEME */
 window.toggleTheme = function(){
 document.body.classList.toggle("light");
 }
 
-/* START */
 loadNews();
 </script>
 
