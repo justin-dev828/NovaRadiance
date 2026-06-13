@@ -5,20 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Radiance RP</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter, sans-serif;
-scroll-behavior:smooth;
+:root{
+--bg:#0a0f1d;
+--card:#111a2e;
+--text:#ffffff;
+--accent:#38bdf8;
+}
+
+.light{
+--bg:#f1f5f9;
+--card:#ffffff;
+--text:#0f172a;
+--accent:#2563eb;
 }
 
 body{
-background:#0a0f1d;
-color:white;
+margin:0;
+font-family:Inter;
+background:var(--bg);
+color:var(--text);
+transition:0.3s;
+overflow-x:hidden;
 }
 
 /* NAV */
@@ -28,171 +38,120 @@ top:0;
 width:100%;
 display:flex;
 justify-content:space-between;
-align-items:center;
 padding:16px 6%;
-background:rgba(10,15,30,0.75);
-backdrop-filter:blur(14px);
+backdrop-filter:blur(10px);
+background:rgba(0,0,0,0.3);
 z-index:1000;
 }
 
-.logo{
-font-weight:800;
-letter-spacing:1px;
-}
+.logo{font-weight:900;}
 
 nav a{
-color:#cbd5e1;
-margin-left:18px;
+color:var(--text);
+margin-left:15px;
 text-decoration:none;
-transition:0.3s;
 }
 
-nav a:hover{
-color:#38bdf8;
-transform:translateY(-2px);
-}
-
-/* HERO */
+/* HERO PARALLAX */
 .hero{
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-padding:20px;
-background:
-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.95)),
-url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80");
-background-size:cover;
-background-position:center;
+background:url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee") center/cover fixed;
+position:relative;
 }
 
-.hero h1{
+.hero::after{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.7);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+animation:fade 1s ease;
+}
+
+h1{
 font-size:4rem;
-animation:fadeIn 1s ease;
-}
-
-.hero p{
-max-width:700px;
-margin:20px auto;
-color:#94a3b8;
-animation:fadeIn 1.4s ease;
+text-shadow:0 0 20px var(--accent);
 }
 
 .btn{
 display:inline-block;
-margin-top:25px;
-padding:14px 30px;
-background:#38bdf8;
+padding:14px 28px;
+margin-top:20px;
+background:var(--accent);
 color:black;
-font-weight:700;
-border-radius:12px;
+border-radius:10px;
 text-decoration:none;
 transition:0.3s;
 }
 
 .btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 25px rgba(56,189,248,0.4);
+transform:scale(1.1);
+box-shadow:0 0 20px var(--accent);
 }
 
-/* SECTIONS */
+/* CARDS */
 section{
-padding:90px 6%;
+padding:80px 6%;
 }
 
-.title{
-text-align:center;
-font-size:2.3rem;
-margin-bottom:40px;
-}
-
-/* FEATURES */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
 .card{
-background:#111a2e;
-padding:22px;
+background:var(--card);
+padding:20px;
 border-radius:15px;
-border:1px solid rgba(255,255,255,0.05);
 transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-10px) scale(1.02);
-border-color:#38bdf8;
+transform:translateY(-10px);
+box-shadow:0 0 25px var(--accent);
 }
 
 /* NEWS */
-.news{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-}
-
 .news-item{
-background:#0f172a;
+background:var(--card);
 padding:20px;
 border-radius:15px;
-border:1px solid rgba(255,255,255,0.05);
-transition:0.3s;
+margin-top:10px;
 }
 
-.news-item:hover{
-transform:scale(1.03);
-border-color:#38bdf8;
-}
-
-/* RULES */
-.rules{
-background:#0f172a;
-padding:25px;
+/* ADMIN PANEL */
+.admin{
+background:var(--card);
+padding:20px;
 border-radius:15px;
-white-space:pre-line;
-color:#cbd5e1;
-border:1px solid rgba(255,255,255,0.05);
+margin-top:20px;
 }
 
-/* DISCORD */
-.discord-box{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-justify-content:center;
-align-items:center;
-}
-
-iframe{
-border-radius:15px;
-width:350px;
-height:500px;
+/* TOGGLE */
+.toggle{
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px;
+background:var(--accent);
 border:none;
-}
-
-/* FOOTER */
-footer{
-text-align:center;
-padding:30px;
-background:#050814;
-color:#64748b;
-margin-top:80px;
+border-radius:50px;
+cursor:pointer;
 }
 
 /* ANIMATION */
-@keyframes fadeIn{
+@keyframes fade{
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
-}
-
-/* MOBILE */
-@media(max-width:768px){
-.hero h1{font-size:2.5rem;}
-iframe{width:100%;height:450px;}
-nav{display:none;}
 }
 </style>
 </head>
@@ -202,131 +161,99 @@ nav{display:none;}
 <header>
 <div class="logo">NOVA RADIANCE RP</div>
 <nav>
-<a href="#features">Features</a>
 <a href="#news">News</a>
-<a href="#rules">Regeln</a>
 <a href="#discord">Discord</a>
 </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-<div>
+<div class="hero-content">
 <h1>Nova Radiance RP</h1>
-<p>Ein realistisches Roleplay-Erlebnis mit Struktur, aktiven Fraktionen und moderner Community.</p>
-<a class="btn" href="DEIN_DISCORD_LINK">Discord beitreten</a>
-</div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-<div class="title">Features</div>
-
-<div class="grid">
-<div class="card">🔥 Realistisches Roleplay</div>
-<div class="card">👮 Polizei / SEK / Feuerwehr</div>
-<div class="card">🚑 Rettungsdienst System</div>
-<div class="card">🎯 Aktives Team & Support</div>
+<p>Modernes Roleplay mit Live Systemen & Admin Kontrolle</p>
+<a class="btn" href="DEIN_DISCORD_LINK">Discord Join</a>
 </div>
 </section>
 
 <!-- NEWS -->
 <section id="news">
-<div class="title">News & Updates</div>
+<h2>📢 News</h2>
+<div id="newsContainer"></div>
 
-<div class="news">
-<div class="news-item">
-<h3>🚀 Server Start</h3>
-<p>Der Server wurde erfolgreich eröffnet und ist jetzt online!</p>
-</div>
-
-<div class="news-item">
-<h3>👮 Neue Polizei Regeln</h3>
-<p>Das Regelwerk wurde überarbeitet für mehr Realismus.</p>
-</div>
-
-<div class="news-item">
-<h3>🔥 Feuerwehr Update</h3>
-<p>Neue Einsatzsysteme wurden hinzugefügt.</p>
-</div>
-</div>
-</section>
-
-<!-- RULES -->
-<section id="rules">
-<div class="title">Regelwerk</div>
-
-<div class="rules">
-
-DISCORD REGELN
-§1 Respektvolle Community ohne Mobbing oder Belästigung
-§2 Kein Ausgrenzen oder Angreifen anderer
-§3 Respekt gegenüber allen Personen
-§4 Keine Diskriminierung oder Beleidigungen
-§5 Keine sexuellen Inhalte oder Anspielungen
-§6 NSFW Inhalte sind verboten
-§7 Kein störendes Verhalten (Soundboards etc.)
-§8 Keine falschen Anschuldigungen
-§9 Keine Drohungen oder Fake-Behauptungen
-§10 Keine Aufnahmen ohne Zustimmung
-§11 Politische/extreme Inhalte im Namen verboten
-§12 Respektvolle Community ist Pflicht
-§13 Verifizierung erforderlich
-
-RP REGELN
-- Realistisches Roleplay verpflichtend
-- Kein FailRP / Meta / Powergaming / RDM / VDM
-- Keine unrealistischen Aktionen
-- Verletzungen müssen ausgespielt werden
-
-POLIZEI / SEK / FEUERWEHR / RD
-- Realistische Einsätze
-- Kein Missbrauch von Rollen
-- Teamarbeit Pflicht
-
-FAHRZEUGE
-- Realistisch fahren
-- Kein Rammen oder Trolling
-
-TEAM
-- Admins sind neutral
-- Entscheidungen sind endgültig
-
-STRAFEN
-Verwarnung → Kick → Ban
-
-Regeln können jederzeit geändert werden.
-
-
+<!-- ADMIN PANEL -->
+<div class="admin">
+<h3>Admin Panel</h3>
+<input id="title" placeholder="Titel">
+<br><br>
+<textarea id="text" placeholder="News Text"></textarea>
+<br><br>
+<button onclick="addNews()">Posten</button>
 </div>
 </section>
 
 <!-- DISCORD -->
 <section id="discord">
-<div class="title">Discord Community</div>
+<h2>Discord Live</h2>
 
-<div class="discord-box">
-
-<!-- DISCORD WIDGET -->
-<iframe 
-src="https://discord.com/widget?id=1502664468641878178&theme=dark"
-allowtransparency="true">
-</iframe>
-
-<div>
-<p style="color:#94a3b8;max-width:300px;">
-Tritt unserem Discord bei und werde Teil einer aktiven RP Community.
-</p>
-
-<a class="btn" href="https://discord.gg/sSy4Mww5f2">Join Discord</a>
+<!-- Member Counter -->
+<div class="card">
+Live Mitglieder: <span id="members">Lade...</span>
 </div>
 
-</div>
 </section>
 
-<footer>
-© 2026 Nova Radiance RP | Alle Rechte vorbehalten
-</footer>
+<button class="toggle" onclick="toggleTheme()">🌙</button>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* 🔥 DEINE FIREBASE CONFIG HIER EINTRAGEN */
+const firebaseConfig = {
+apiKey: "XXX",
+authDomain: "XXX",
+projectId: "XXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* NEWS LADEN */
+async function loadNews(){
+const snap = await getDocs(collection(db,"news"));
+document.getElementById("newsContainer").innerHTML="";
+snap.forEach(doc=>{
+let d = doc.data();
+document.getElementById("newsContainer").innerHTML += `
+<div class="news-item">
+<h3>${d.title}</h3>
+<p>${d.text}</p>
+</div>`;
+});
+}
+
+/* NEWS HINZUFÜGEN */
+window.addNews = async function(){
+let t = document.getElementById("title").value;
+let tx = document.getElementById("text").value;
+
+await addDoc(collection(db,"news"),{
+title:t,
+text:tx
+});
+
+loadNews();
+}
+
+/* DARK MODE */
+window.toggleTheme = function(){
+document.body.classList.toggle("light");
+}
+
+/* START */
+loadNews();
+</script>
 
 </body>
 </html>
