@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Radiance RP</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -18,7 +17,7 @@ scroll-behavior:smooth;
 }
 
 body{
-background:#0b1220;
+background:#0a0f1d;
 color:white;
 }
 
@@ -30,27 +29,27 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 8%;
+padding:16px 6%;
 background:rgba(10,15,30,0.75);
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
 z-index:1000;
 }
 
 .logo{
 font-weight:800;
-font-size:1.2rem;
 letter-spacing:1px;
 }
 
 nav a{
 color:#cbd5e1;
-margin-left:20px;
+margin-left:18px;
 text-decoration:none;
 transition:0.3s;
 }
 
 nav a:hover{
 color:#38bdf8;
+transform:translateY(-2px);
 }
 
 /* HERO */
@@ -62,97 +61,119 @@ justify-content:center;
 text-align:center;
 padding:20px;
 background:
-linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.9)),
-url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80");
+linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.95)),
+url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80");
 background-size:cover;
 background-position:center;
 }
 
 .hero h1{
 font-size:4rem;
-font-weight:800;
 animation:fadeIn 1s ease;
 }
 
 .hero p{
 max-width:700px;
 margin:20px auto;
-color:#cbd5e1;
-animation:fadeIn 1.5s ease;
+color:#94a3b8;
+animation:fadeIn 1.4s ease;
 }
 
 .btn{
 display:inline-block;
 margin-top:25px;
-padding:14px 28px;
+padding:14px 30px;
 background:#38bdf8;
 color:black;
-font-weight:600;
-border-radius:10px;
+font-weight:700;
+border-radius:12px;
 text-decoration:none;
 transition:0.3s;
 }
 
 .btn:hover{
-transform:scale(1.05);
+transform:scale(1.08);
+box-shadow:0 0 25px rgba(56,189,248,0.4);
 }
 
 /* SECTIONS */
 section{
-padding:100px 8%;
+padding:90px 6%;
 }
 
 .title{
 text-align:center;
-font-size:2.2rem;
-margin-bottom:50px;
-font-weight:700;
+font-size:2.3rem;
+margin-bottom:40px;
 }
 
-/* CARDS */
+/* FEATURES */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:20px;
 }
 
 .card{
 background:#111a2e;
-padding:25px;
+padding:22px;
 border-radius:15px;
-transition:0.3s;
 border:1px solid rgba(255,255,255,0.05);
+transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-10px) scale(1.02);
 border-color:#38bdf8;
 }
 
-.card h3{
-margin-bottom:10px;
+/* NEWS */
+.news{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
 }
 
-.card p{
-color:#94a3b8;
-line-height:1.5;
+.news-item{
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,0.05);
+transition:0.3s;
+}
+
+.news-item:hover{
+transform:scale(1.03);
+border-color:#38bdf8;
 }
 
 /* RULES */
 .rules{
 background:#0f172a;
-border-radius:15px;
 padding:25px;
+border-radius:15px;
 white-space:pre-line;
 color:#cbd5e1;
 border:1px solid rgba(255,255,255,0.05);
 }
 
 /* DISCORD */
-.discord{
-text-align:center;
+.discord-box{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+align-items:center;
 }
 
+iframe{
+border-radius:15px;
+width:350px;
+height:500px;
+border:none;
+}
+
+/* FOOTER */
 footer{
 text-align:center;
 padding:30px;
@@ -166,6 +187,13 @@ margin-top:80px;
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
 }
+
+/* MOBILE */
+@media(max-width:768px){
+.hero h1{font-size:2.5rem;}
+iframe{width:100%;height:450px;}
+nav{display:none;}
+}
 </style>
 </head>
 
@@ -175,6 +203,7 @@ to{opacity:1; transform:translateY(0);}
 <div class="logo">NOVA RADIANCE RP</div>
 <nav>
 <a href="#features">Features</a>
+<a href="#news">News</a>
 <a href="#rules">Regeln</a>
 <a href="#discord">Discord</a>
 </nav>
@@ -184,29 +213,41 @@ to{opacity:1; transform:translateY(0);}
 <section class="hero">
 <div>
 <h1>Nova Radiance RP</h1>
-<p>Realistisches Roleplay mit strukturierten Fraktionen, aktivem Team und einer starken Community.</p>
+<p>Ein realistisches Roleplay-Erlebnis mit Struktur, aktiven Fraktionen und moderner Community.</p>
 <a class="btn" href="DEIN_DISCORD_LINK">Discord beitreten</a>
 </div>
 </section>
 
 <!-- FEATURES -->
 <section id="features">
-<div class="title">Warum unser Server?</div>
+<div class="title">Features</div>
 
 <div class="grid">
-<div class="card">
-<h3>Realistisches RP</h3>
-<p>Strenge, aber faire RP-Regeln für ein immersives Spielerlebnis.</p>
+<div class="card">🔥 Realistisches Roleplay</div>
+<div class="card">👮 Polizei / SEK / Feuerwehr</div>
+<div class="card">🚑 Rettungsdienst System</div>
+<div class="card">🎯 Aktives Team & Support</div>
+</div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+<div class="title">News & Updates</div>
+
+<div class="news">
+<div class="news-item">
+<h3>🚀 Server Start</h3>
+<p>Der Server wurde erfolgreich eröffnet und ist jetzt online!</p>
 </div>
 
-<div class="card">
-<h3>Aktives Team</h3>
-<p>Admins und Support sind jederzeit für dich da.</p>
+<div class="news-item">
+<h3>👮 Neue Polizei Regeln</h3>
+<p>Das Regelwerk wurde überarbeitet für mehr Realismus.</p>
 </div>
 
-<div class="card">
-<h3>Fraktionen</h3>
-<p>Feuerwehr, Polizei, Rettungsdienst und mehr strukturiert organisiert.</p>
+<div class="news-item">
+<h3>🔥 Feuerwehr Update</h3>
+<p>Neue Einsatzsysteme wurden hinzugefügt.</p>
 </div>
 </div>
 </section>
@@ -256,18 +297,31 @@ Verwarnung → Kick → Ban
 
 Regeln können jederzeit geändert werden.
 
+
 </div>
 </section>
 
 <!-- DISCORD -->
-<section id="discord" class="discord">
-<div class="title">Werde Teil der Community</div>
+<section id="discord">
+<div class="title">Discord Community</div>
 
-<p style="color:#94a3b8;margin-bottom:25px;">
-Tritt unserem Discord bei und starte dein Roleplay Erlebnis.
+<div class="discord-box">
+
+<!-- DISCORD WIDGET -->
+<iframe 
+src="https://discord.com/widget?id=DEINE_SERVER_ID&theme=dark"
+allowtransparency="true">
+</iframe>
+
+<div>
+<p style="color:#94a3b8;max-width:300px;">
+Tritt unserem Discord bei und werde Teil einer aktiven RP Community.
 </p>
 
-<a class="btn" href="DEIN_DISCORD_LINK">Discord öffnen</a>
+<a class="btn" href="DEIN_DISCORD_LINK">Join Discord</a>
+</div>
+
+</div>
 </section>
 
 <footer>
