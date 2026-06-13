@@ -5,246 +5,273 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Radiance RP</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter, sans-serif;
+scroll-behavior:smooth;
 }
 
 body{
-    background:#0f172a;
-    color:white;
+background:#0b1220;
+color:white;
 }
 
+/* NAV */
 header{
-    position:fixed;
-    top:0;
-    width:100%;
-    padding:20px 8%;
-    backdrop-filter:blur(10px);
-    background:rgba(15,23,42,.8);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:1000;
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 8%;
+background:rgba(10,15,30,0.75);
+backdrop-filter:blur(12px);
+z-index:1000;
 }
 
 .logo{
-    font-size:1.5rem;
-    font-weight:bold;
+font-weight:800;
+font-size:1.2rem;
+letter-spacing:1px;
 }
 
 nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:25px;
-    transition:.3s;
+color:#cbd5e1;
+margin-left:20px;
+text-decoration:none;
+transition:0.3s;
 }
 
 nav a:hover{
-    color:#38bdf8;
+color:#38bdf8;
 }
 
+/* HERO */
 .hero{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-    background:
-    linear-gradient(rgba(15,23,42,.7),rgba(15,23,42,.9)),
-    url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80");
-    background-size:cover;
-    background-position:center;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+background:
+linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.9)),
+url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80");
+background-size:cover;
+background-position:center;
 }
 
-.hero-content h1{
-    font-size:4rem;
-    margin-bottom:20px;
+.hero h1{
+font-size:4rem;
+font-weight:800;
+animation:fadeIn 1s ease;
 }
 
-.hero-content p{
-    max-width:700px;
-    margin:auto;
-    font-size:1.2rem;
-    color:#cbd5e1;
+.hero p{
+max-width:700px;
+margin:20px auto;
+color:#cbd5e1;
+animation:fadeIn 1.5s ease;
 }
 
 .btn{
-    display:inline-block;
-    margin-top:30px;
-    padding:14px 30px;
-    background:#38bdf8;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    transition:.3s;
+display:inline-block;
+margin-top:25px;
+padding:14px 28px;
+background:#38bdf8;
+color:black;
+font-weight:600;
+border-radius:10px;
+text-decoration:none;
+transition:0.3s;
 }
 
 .btn:hover{
-    transform:translateY(-3px);
+transform:scale(1.05);
 }
 
+/* SECTIONS */
 section{
-    padding:100px 8%;
+padding:100px 8%;
 }
 
-.section-title{
-    text-align:center;
-    font-size:2.5rem;
-    margin-bottom:50px;
+.title{
+text-align:center;
+font-size:2.2rem;
+margin-bottom:50px;
+font-weight:700;
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
+/* CARDS */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
 }
 
 .card{
-    background:#1e293b;
-    padding:25px;
-    border-radius:15px;
-    transition:.3s;
+background:#111a2e;
+padding:25px;
+border-radius:15px;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.05);
 }
 
 .card:hover{
-    transform:translateY(-5px);
+transform:translateY(-6px);
+border-color:#38bdf8;
 }
 
 .card h3{
-    margin-bottom:15px;
+margin-bottom:10px;
 }
 
 .card p{
-    color:#cbd5e1;
+color:#94a3b8;
+line-height:1.5;
 }
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
+/* RULES */
+.rules{
+background:#0f172a;
+border-radius:15px;
+padding:25px;
+white-space:pre-line;
+color:#cbd5e1;
+border:1px solid rgba(255,255,255,0.05);
 }
 
-.stat{
-    text-align:center;
-    background:#1e293b;
-    padding:30px;
-    border-radius:15px;
-}
-
-.stat h2{
-    color:#38bdf8;
-    font-size:2.5rem;
+/* DISCORD */
+.discord{
+text-align:center;
 }
 
 footer{
-    text-align:center;
-    padding:30px;
-    background:#020617;
-    color:#94a3b8;
+text-align:center;
+padding:30px;
+background:#050814;
+color:#64748b;
+margin-top:80px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
+
 <body>
 
 <header>
-    <div class="logo">Nova Radiance RP</div>
-
-    <nav>
-        <a href="#features">Features</a>
-        <a href="#stats">Server</a>
-        <a href="#discord">Discord</a>
-    </nav>
+<div class="logo">NOVA RADIANCE RP</div>
+<nav>
+<a href="#features">Features</a>
+<a href="#rules">Regeln</a>
+<a href="#discord">Discord</a>
+</nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-content">
-        <h1>Nova Radiance RP</h1>
-        <p>
-            Realistisches Roleplay, professionelle Verwaltung
-            und eine starke Community. Werde Teil unseres Projekts
-            und erlebe einzigartiges RP.
-        </p>
-
-        <a class="btn" href="https://discord.gg/sSy4Mww5f2">Discord beitreten</a>
-    </div>
+<div>
+<h1>Nova Radiance RP</h1>
+<p>Realistisches Roleplay mit strukturierten Fraktionen, aktivem Team und einer starken Community.</p>
+<a class="btn" href="DEIN_DISCORD_LINK">Discord beitreten</a>
+</div>
 </section>
 
+<!-- FEATURES -->
 <section id="features">
-    <h2 class="section-title">Warum Nova Radiance?</h2>
+<div class="title">Warum unser Server?</div>
 
-    <div class="cards">
+<div class="grid">
+<div class="card">
+<h3>Realistisches RP</h3>
+<p>Strenge, aber faire RP-Regeln für ein immersives Spielerlebnis.</p>
+</div>
 
-        <div class="card">
-            <h3>Professionelles RP</h3>
-            <p>
-                Strukturierte Fraktionen,
-                realistische Szenarien und hochwertiges Roleplay.
-            </p>
-        </div>
+<div class="card">
+<h3>Aktives Team</h3>
+<p>Admins und Support sind jederzeit für dich da.</p>
+</div>
 
-        <div class="card">
-            <h3>Aktives Team</h3>
-            <p>
-                Unser Team kümmert sich täglich um die Community
-                und die Weiterentwicklung des Projekts.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Moderne Systeme</h3>
-            <p>
-                Eigene Konzepte, Bewerbungen,
-                Fraktionsmanagement und vieles mehr.
-            </p>
-        </div>
-
-    </div>
+<div class="card">
+<h3>Fraktionen</h3>
+<p>Feuerwehr, Polizei, Rettungsdienst und mehr strukturiert organisiert.</p>
+</div>
+</div>
 </section>
 
-<section id="stats">
-    <h2 class="section-title">Server Informationen</h2>
+<!-- RULES -->
+<section id="rules">
+<div class="title">Regelwerk</div>
 
-    <div class="stats">
+<div class="rules">
 
-        <div class="stat">
-            <h2>24/7</h2>
-            <p>Community</p>
-        </div>
+DISCORD REGELN
+§1 Respektvolle Community ohne Mobbing oder Belästigung
+§2 Kein Ausgrenzen oder Angreifen anderer
+§3 Respekt gegenüber allen Personen
+§4 Keine Diskriminierung oder Beleidigungen
+§5 Keine sexuellen Inhalte oder Anspielungen
+§6 NSFW Inhalte sind verboten
+§7 Kein störendes Verhalten (Soundboards etc.)
+§8 Keine falschen Anschuldigungen
+§9 Keine Drohungen oder Fake-Behauptungen
+§10 Keine Aufnahmen ohne Zustimmung
+§11 Politische/extreme Inhalte im Namen verboten
+§12 Respektvolle Community ist Pflicht
+§13 Verifizierung erforderlich
 
-        <div class="stat">
-            <h2>100%</h2>
-            <p>Leidenschaft</p>
-        </div>
+RP REGELN
+- Realistisches Roleplay verpflichtend
+- Kein FailRP / Meta / Powergaming / RDM / VDM
+- Keine unrealistischen Aktionen
+- Verletzungen müssen ausgespielt werden
 
-        <div class="stat">
-            <h2>RP</h2>
-            <p>Fokus</p>
-        </div>
+POLIZEI / SEK / FEUERWEHR / RD
+- Realistische Einsätze
+- Kein Missbrauch von Rollen
+- Teamarbeit Pflicht
 
-    </div>
+FAHRZEUGE
+- Realistisch fahren
+- Kein Rammen oder Trolling
+
+TEAM
+- Admins sind neutral
+- Entscheidungen sind endgültig
+
+STRAFEN
+Verwarnung → Kick → Ban
+
+Regeln können jederzeit geändert werden.
+
+</div>
 </section>
 
-<section id="discord">
-    <h2 class="section-title">Werde Teil der Community</h2>
+<!-- DISCORD -->
+<section id="discord" class="discord">
+<div class="title">Werde Teil der Community</div>
 
-    <div style="text-align:center;">
-        <p style="margin-bottom:25px;color:#cbd5e1;">
-            Trete unserem Discord bei und starte dein Abenteuer.
-        </p>
+<p style="color:#94a3b8;margin-bottom:25px;">
+Tritt unserem Discord bei und starte dein Roleplay Erlebnis.
+</p>
 
-        <a class="btn" href="DEIN_DISCORD_LINK">
-            Discord öffnen
-        </a>
-    </div>
+<a class="btn" href="DEIN_DISCORD_LINK">Discord öffnen</a>
 </section>
 
 <footer>
-    © 2026 Nova Radiance RP | Alle Rechte vorbehalten
+© 2026 Nova Radiance RP | Alle Rechte vorbehalten
 </footer>
 
 </body>
