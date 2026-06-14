@@ -145,7 +145,7 @@ to{opacity:1; transform:translateY(0);}
 <h2>📢 News</h2>
 <div id="newsContainer"></div>
 
-<div class="admin" id="adminPanel" style="display:none;">
+<div class="admin" id="adminPanel" hidden>
 <h3>🔒 Admin Panel</h3>
 
 <input id="title" placeholder="Titel">
@@ -291,43 +291,39 @@ window.toggleTheme = function(){
 document.body.classList.toggle("light");
 }
 
-    /* VERSTECKTER ADMIN LOGIN */
+/* VERSTECKTER ADMIN LOGIN */
 if(window.location.hash === "#admin"){
 
-  document.getElementById("adminPanel").style.display = "block";
-
   const email = prompt("Admin E-Mail");
+  if(email === null){
+    window.location.hash = "";
+    throw new Error("Login abgebrochen");
+  }
 
   const password = prompt("Passwort");
-
-  if(email && password){
-
-    signInWithEmailAndPassword(auth,email,password)
-
-    .then(()=>{
-      console.log("Admin Login erfolgreich");
-    })
-
-    .catch(()=>{
-      alert("Login fehlgeschlagen");
-      document.getElementById("adminPanel").style.display = "none";
-    });
-
+  if(password === null){
+    window.location.hash = "";
+    throw new Error("Login abgebrochen");
   }
+
+  signInWithEmailAndPassword(auth, email, password)
+  .then(()=>{
+    document.getElementById("adminPanel").hidden = false;
+    console.log("Admin Login erfolgreich");
+  })
+  .catch(()=>{
+    alert("Login fehlgeschlagen");
+    document.getElementById("adminPanel").style.display = "none";
+    window.location.hash = "";
+  });
 
 }
-
-/* GEHEIMER LOGOUT */
+  /* GEHEIMER LOGOUT */
 document.addEventListener("keydown", async (e)=>{
-
   if(e.ctrlKey && e.shiftKey && e.key === "L"){
-
     await signOut(auth);
-
     alert("Abgemeldet");
-
   }
-
 });
   
 loadNews();
