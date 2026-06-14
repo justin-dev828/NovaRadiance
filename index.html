@@ -357,36 +357,35 @@ document.body.classList.toggle("light");
 }
 
 /* VERSTECKTER ADMIN LOGIN */
-if(window.location.hash === "#admin"){
-
+async function adminLogin() {
   const email = prompt("Admin E-Mail");
-  if(email === null){
-    window.location.hash = "";
-    throw new Error("Login abgebrochen");
-  }
+  if(email === null) return;
 
   const password = prompt("Passwort");
-  if(password === null){
-    window.location.hash = "";
-    throw new Error("Login abgebrochen");
-  }
+  if(password === null) return;
 
-  signInWithEmailAndPassword(auth, email, password)
-  .then(()=>{
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
     document.getElementById("adminPanel").hidden = false;
     console.log("Admin Login erfolgreich");
-  })
-  .catch(()=>{
-  alert("Login fehlgeschlagen");
-  document.getElementById("adminPanel").hidden = true;
-  window.location.hash = "";
-});
+  } catch(error) {
+    alert("Login fehlgeschlagen");
+    document.getElementById("adminPanel").hidden = true;
+    window.location.hash = "";
+  }
+}
+
+if(window.location.hash === "#admin"){
+  adminLogin();
+}
 
 }
   /* GEHEIMER LOGOUT */
 document.addEventListener("keydown", async (e)=>{
   if(e.ctrlKey && e.shiftKey && e.key === "L"){
     await signOut(auth);
+    document.getElementById("adminPanel").hidden = true;
+    window.location.hash = "";
     alert("Abgemeldet");
   }
 });
