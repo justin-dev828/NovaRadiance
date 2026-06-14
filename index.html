@@ -174,7 +174,21 @@ target="_blank">
 <br><br>
 
 <button onclick="addNews()">📢 News veröffentlichen</button>
+<hr>
 
+<h3>📝 Changelog</h3>
+
+<input id="changeVersion" placeholder="Version">
+<br><br>
+
+<textarea id="changeText" placeholder="Änderungen"></textarea>
+<br><br>
+
+<button onclick="addChangelog()">
+➕ Changelog hinzufügen
+</button>
+
+<div id="adminChangelog"></div>
 <br><br>
 
 <button onclick="logout()">🚪 Logout</button>
@@ -183,18 +197,9 @@ target="_blank">
 </section>
   
 <section id="changelog">
-
 <h2>📝 Changelog</h2>
 
-<div class="card">
-<h3>Version 1.0</h3>
-<p>Server Release</p>
-</div>
-
-<div class="card">
-<h3>Version 1.1</h3>
-<p>Fraktionen sind geboren</p>
-</div>
+<div id="changelogContainer"></div>
 
 </section>
   
@@ -288,6 +293,7 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
+  setDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
@@ -339,7 +345,44 @@ window.deleteNews = async function(id){
   loadNews();
 }
   window.editNews = async function(id, oldTitle, oldText){
+async function loadChangelog(){
 
+const snap = await getDocs(collection(db,"changelog"));
+
+document.getElementById("changelogContainer").innerHTML="";
+document.getElementById("adminChangelog").innerHTML="";
+
+snap.forEach(change=>{
+
+const d = change.data();
+
+document.getElementById("changelogContainer").innerHTML += `
+<div class="card">
+<h3>${d.version}</h3>
+<p>${d.text}</p>
+</div>
+`;
+
+if(auth.currentUser){
+
+document.getElementById("adminChangelog").innerHTML += `
+<div class="card">
+<b>${d.version}</b>
+
+<button onclick="editChangelog('${change.id}','${d.version}','${d.text}')">
+✏️
+</button>
+
+<button onclick="deleteChangelog('${change.id}')">
+🗑
+</button>
+</div>
+`;
+}
+
+});
+
+}
   const newTitle = prompt("Neuer Titel:", oldTitle);
   if(newTitle === null) return;
 
@@ -354,6 +397,54 @@ window.deleteNews = async function(id){
   loadNews();
 }
 window.addNews = async function(){
+  window.addChangelog = async function(){
+window.editChangelog = async function(id,oldVersion,oldText){
+window.deleteChangelog = async function(id){
+
+if(!confirm("Löschen?")) return;
+
+await deleteDoc(
+doc(db,"changelog",id)
+);
+
+loadChangelog();
+
+}
+const version =
+prompt("Version",oldVersion);
+
+if(version === null) return;
+
+const text =
+prompt("Text",oldText);
+
+if(text === null) return;
+
+await updateDoc(
+doc(db,"changelog",id),
+{
+version,
+text
+}
+);
+
+loadChangelog();
+
+}
+const version =
+document.getElementById("changeVersion").value;
+
+const text =
+document.getElementById("changeText").value;
+
+await addDoc(collection(db,"changelog"),{
+version,
+text
+});
+
+loadChangelog();
+
+}
 if(!auth.currentUser){
 alert("Bitte zuerst als Admin anmelden.");
 return;
@@ -429,7 +520,8 @@ document.addEventListener("keydown", async (e)=>{
   }
 });
   
-loadNews();
+  loadNews();
+loadChangelog();
 </script>
   
 <script>
