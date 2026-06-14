@@ -145,16 +145,23 @@ to{opacity:1; transform:translateY(0);}
 <h2>📢 News</h2>
 <div id="newsContainer"></div>
 
-<div class="admin">
-<h3>Admin Panel</h3>
+<div class="admin" id="adminPanel" style="display:none;">
+<h3>🔒 Admin Panel</h3>
+
 <input id="title" placeholder="Titel">
+
 <br><br>
+
 <textarea id="text" placeholder="News Text"></textarea>
+
 <br><br>
-<button onclick="addNews()">Posten</button>
+
+<button onclick="addNews()">📢 News veröffentlichen</button>
+
 <br><br>
-<button onclick="login()">Admin Login</button>
-<button onclick="logout()">Logout</button>
+
+<button onclick="logout()">🚪 Logout</button>
+
 </div>
 </section>
 
@@ -260,6 +267,45 @@ text:tx,
 time:Date.now()
 });
 
+  /* VERSTECKTER ADMIN LOGIN */
+if(window.location.hash === "#admin"){
+
+  document.getElementById("adminPanel").style.display = "block";
+
+  const email = prompt("Admin E-Mail");
+
+  const password = prompt("Passwort");
+
+  if(email && password){
+
+    signInWithEmailAndPassword(auth,email,password)
+
+    .then(()=>{
+      console.log("Admin Login erfolgreich");
+    })
+
+    .catch(()=>{
+      alert("Login fehlgeschlagen");
+      document.getElementById("adminPanel").style.display = "none";
+    });
+
+  }
+
+}
+
+/* GEHEIMER LOGOUT */
+document.addEventListener("keydown", async (e)=>{
+
+  if(e.ctrlKey && e.shiftKey && e.key === "L"){
+
+    await signOut(auth);
+
+    alert("Abgemeldet");
+
+  }
+
+});
+  
 loadNews();
 }
 
