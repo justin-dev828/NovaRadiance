@@ -287,6 +287,7 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
+  updateDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
@@ -318,6 +319,10 @@ document.getElementById("newsContainer").innerHTML += `
 <p>${d.text}</p>
 
 ${auth.currentUser ? `
+<button onclick="editNews('${doc.id}','${d.title}','${d.text}')">
+✏️ Bearbeiten
+</button>
+
 <button onclick="deleteNews('${doc.id}')">
 🗑 Löschen
 </button>
@@ -330,6 +335,21 @@ window.deleteNews = async function(id){
   if(!confirm("News wirklich löschen?")) return;
 
   await deleteDoc(doc(db, "news", id));
+
+  loadNews();
+}
+  window.editNews = async function(id, oldTitle, oldText){
+
+  const newTitle = prompt("Neuer Titel:", oldTitle);
+  if(newTitle === null) return;
+
+  const newText = prompt("Neuer Text:", oldText);
+  if(newText === null) return;
+
+  await updateDoc(doc(db, "news", id), {
+    title: newTitle,
+    text: newText
+  });
 
   loadNews();
 }
