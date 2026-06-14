@@ -267,7 +267,31 @@ text:tx,
 time:Date.now()
 });
 
-  /* VERSTECKTER ADMIN LOGIN */
+loadNews();
+}
+
+window.login = async function() {
+const email = prompt("E-Mail");
+const password = prompt("Passwort");
+
+try{
+await signInWithEmailAndPassword(auth,email,password);
+alert("Login erfolgreich");
+}catch(error){
+alert("Login fehlgeschlagen");
+}
+}
+
+window.logout = async function() {
+await signOut(auth);
+alert("Abgemeldet");
+}
+
+window.toggleTheme = function(){
+document.body.classList.toggle("light");
+}
+
+    /* VERSTECKTER ADMIN LOGIN */
 if(window.location.hash === "#admin"){
 
   document.getElementById("adminPanel").style.display = "block";
@@ -306,30 +330,6 @@ document.addEventListener("keydown", async (e)=>{
 
 });
   
-loadNews();
-}
-
-window.login = async function() {
-const email = prompt("E-Mail");
-const password = prompt("Passwort");
-
-try{
-await signInWithEmailAndPassword(auth,email,password);
-alert("Login erfolgreich");
-}catch(error){
-alert("Login fehlgeschlagen");
-}
-}
-
-window.logout = async function() {
-await signOut(auth);
-alert("Abgemeldet");
-}
-
-window.toggleTheme = function(){
-document.body.classList.toggle("light");
-}
-
 loadNews();
 </script>
 
