@@ -136,7 +136,9 @@ to{opacity:1; transform:translateY(0);}
 <div class="logo">NOVA RADIANCE RP</div>
 <nav>
 <a href="#news">News</a>
+<a href="#changelog">Changelog</a>
 <a href="#rules">Regeln</a>
+<a href="#team">Team</a>
 <a href="#discord">Discord</a>
 </nav>
 </header>
@@ -325,6 +327,8 @@ title:t,
 text:tx,
 time:Date.now()
 });
+  document.getElementById("title").value = "";
+document.getElementById("text").value = "";
 
 loadNews();
 }
@@ -342,8 +346,10 @@ alert("Login fehlgeschlagen");
 }
 
 window.logout = async function() {
-await signOut(auth);
-alert("Abgemeldet");
+  await signOut(auth);
+  document.getElementById("adminPanel").hidden = true;
+  window.location.hash = "";
+  alert("Abgemeldet");
 }
 
 window.toggleTheme = function(){
@@ -371,10 +377,10 @@ if(window.location.hash === "#admin"){
     console.log("Admin Login erfolgreich");
   })
   .catch(()=>{
-    alert("Login fehlgeschlagen");
-    document.getElementById("adminPanel").style.display = "none";
-    window.location.hash = "";
-  });
+  alert("Login fehlgeschlagen");
+  document.getElementById("adminPanel").hidden = true;
+  window.location.hash = "";
+});
 
 }
   /* GEHEIMER LOGOUT */
