@@ -281,7 +281,14 @@ frameborder="0">
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -309,10 +316,23 @@ document.getElementById("newsContainer").innerHTML += `
 <div class="news-item">
 <h3>${d.title}</h3>
 <p>${d.text}</p>
+
+${auth.currentUser ? `
+<button onclick="deleteNews('${doc.id}')">
+🗑 Löschen
+</button>
+` : ""}
+
 </div>`;
 });
 }
+window.deleteNews = async function(id){
+  if(!confirm("News wirklich löschen?")) return;
 
+  await deleteDoc(doc(db, "news", id));
+
+  loadNews();
+}
 window.addNews = async function(){
 if(!auth.currentUser){
 alert("Bitte zuerst als Admin anmelden.");
