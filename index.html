@@ -31,7 +31,6 @@ transition:0.3s;
 overflow-x:hidden;
 }
 
-/* NAV */
 header{
 position:fixed;
 top:0;
@@ -52,7 +51,6 @@ margin-left:15px;
 text-decoration:none;
 }
 
-/* HERO */
 .hero{
 height:100vh;
 display:flex;
@@ -97,57 +95,16 @@ transform:scale(1.1);
 box-shadow:0 0 20px var(--accent);
 }
 
-/* SECTIONS */
-section{
-padding:80px 6%;
-}
+section{padding:80px 6%;}
 
-/* CARDS */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.card{
+.card,.news-item,.admin,.rules-box{
 background:var(--card);
 padding:20px;
 border-radius:15px;
-transition:0.3s;
 }
 
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 25px var(--accent);
-}
+.rules-box{white-space:pre-line;line-height:1.6;}
 
-/* NEWS */
-.news-item{
-background:var(--card);
-padding:20px;
-border-radius:15px;
-margin-top:10px;
-}
-
-/* ADMIN */
-.admin{
-background:var(--card);
-padding:20px;
-border-radius:15px;
-margin-top:20px;
-}
-
-/* RULES */
-.rules-box{
-background:var(--card);
-padding:25px;
-border-radius:15px;
-line-height:1.6;
-color:var(--text);
-white-space:pre-line;
-}
-
-/* TOGGLE */
 .toggle{
 position:fixed;
 bottom:20px;
@@ -159,14 +116,12 @@ border-radius:50px;
 cursor:pointer;
 }
 
-/* ANIMATION */
 @keyframes fade{
 from{opacity:0; transform:translateY(20px);}
 to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -178,7 +133,6 @@ to{opacity:1; transform:translateY(0);}
 </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
 <div class="hero-content">
 <h1>Nova Radiance RP</h1>
@@ -187,7 +141,6 @@ to{opacity:1; transform:translateY(0);}
 </div>
 </section>
 
-<!-- NEWS -->
 <section id="news">
 <h2>📢 News</h2>
 <div id="newsContainer"></div>
@@ -199,15 +152,15 @@ to{opacity:1; transform:translateY(0);}
 <textarea id="text" placeholder="News Text"></textarea>
 <br><br>
 <button onclick="addNews()">Posten</button>
+<br><br>
+<button onclick="login()">Admin Login</button>
+<button onclick="logout()">Logout</button>
 </div>
 </section>
 
-<!-- RULES (NEU) -->
 <section id="rules">
 <h2>📜 Regelwerk</h2>
-
 <div class="rules-box">
-
 DISCORD REGELN
 §1 Respektvolle Community ohne Mobbing oder Belästigung
 §2 Kein Ausgrenzen oder Angreifen anderer
@@ -246,37 +199,39 @@ STRAFEN
 Verwarnung → Kick → Ban
 
 Regeln können jederzeit geändert werden.
-
 </div>
 </section>
 
-<!-- DISCORD -->
 <section id="discord">
 <h2>Discord Live</h2>
-
 <div class="card">
 Live Mitglieder: <span id="members">Lade...</span>
 </div>
-
 </section>
 
 <button class="toggle" onclick="toggleTheme()">🌙</button>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
-apiKey: "XXX",
-authDomain: "XXX",
-projectId: "XXX"
+  apiKey: "AIzaSyDrChzk0G4f7Dk9NUmOTlI5DeVbks8zIFk",
+  authDomain: "nova-radiance-rp.firebaseapp.com",
+  projectId: "nova-radiance-rp",
+  storageBucket: "nova-radiance-rp.firebasestorage.app",
+  messagingSenderId: "298384896260",
+  appId: "1:298384896260:web:d0771ed713b7bb9b722051",
+  measurementId: "G-NPCSY86L0E"
 };
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-/* NEWS */
 async function loadNews(){
 const snap = await getDocs(collection(db,"news"));
 document.getElementById("newsContainer").innerHTML="";
@@ -291,18 +246,40 @@ document.getElementById("newsContainer").innerHTML += `
 }
 
 window.addNews = async function(){
+if(!auth.currentUser){
+alert("Bitte zuerst als Admin anmelden.");
+return;
+}
+
 let t = document.getElementById("title").value;
 let tx = document.getElementById("text").value;
 
 await addDoc(collection(db,"news"),{
 title:t,
-text:tx
+text:tx,
+time:Date.now()
 });
 
 loadNews();
 }
 
-/* THEME */
+window.login = async function() {
+const email = prompt("E-Mail");
+const password = prompt("Passwort");
+
+try{
+await signInWithEmailAndPassword(auth,email,password);
+alert("Login erfolgreich");
+}catch(error){
+alert("Login fehlgeschlagen");
+}
+}
+
+window.logout = async function() {
+await signOut(auth);
+alert("Abgemeldet");
+}
+
 window.toggleTheme = function(){
 document.body.classList.toggle("light");
 }
