@@ -472,15 +472,22 @@ window.deleteChangelog = async function(id){
 }
   
 window.login = async function() {
-const email = prompt("E-Mail");
-const password = prompt("Passwort");
+  const email = prompt("E-Mail");
+  const password = prompt("Passwort");
 
-try{
-await signInWithEmailAndPassword(auth,email,password);
-alert("Login erfolgreich");
-}catch(error){
-alert("Login fehlgeschlagen");
-}
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+
+    document.getElementById("adminPanel").hidden = false;
+
+    loadNews();
+    loadChangelog();
+
+    alert("Login erfolgreich");
+  }catch(error){
+    console.error(error);
+    alert("Login fehlgeschlagen");
+  }
 }
 
 window.logout = async function() {
