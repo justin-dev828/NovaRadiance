@@ -398,6 +398,51 @@ document.getElementById("adminChangelog").innerHTML += `
 }
 });
 }
+
+window.addNews = async function(){
+  if(!auth.currentUser){
+    alert("Bitte zuerst als Admin anmelden.");
+    return;
+  }
+
+  const t = document.getElementById("title").value;
+  const tx = document.getElementById("text").value;
+
+  await addDoc(collection(db,"news"),{
+    title:t,
+    text:tx,
+    time:Date.now()
+  });
+
+  document.getElementById("title").value = "";
+  document.getElementById("text").value = "";
+
+  loadNews();
+}
+
+  window.addChangelog = async function(){
+  if(!auth.currentUser){
+    alert("Bitte zuerst als Admin anmelden.");
+    return;
+  }
+
+  const version =
+    document.getElementById("changeVersion").value;
+
+  const text =
+    document.getElementById("changeText").value;
+
+  await addDoc(collection(db,"changelog"),{
+    version,
+    text
+  });
+
+  document.getElementById("changeVersion").value = "";
+  document.getElementById("changeText").value = "";
+
+  loadChangelog();
+}
+  
 window.login = async function() {
 const email = prompt("E-Mail");
 const password = prompt("Passwort");
