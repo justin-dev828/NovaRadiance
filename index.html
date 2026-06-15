@@ -426,6 +426,34 @@ window.addNews = async function(){
     return;
   }
 
+window.editChangelog = async function(id, oldVersion, oldText){
+  const version = prompt("Version", oldVersion);
+  if(version === null) return;
+
+  const text = prompt("Text", oldText);
+  if(text === null) return;
+
+  await updateDoc(
+    doc(db, "changelog", id),
+    {
+      version,
+      text
+    }
+  );
+
+  loadChangelog();
+}
+
+window.deleteChangelog = async function(id){
+  if(!confirm("Changelog wirklich löschen?")) return;
+
+  await deleteDoc(
+    doc(db, "changelog", id)
+  );
+
+  loadChangelog();
+}
+    
   const version =
     document.getElementById("changeVersion").value;
 
